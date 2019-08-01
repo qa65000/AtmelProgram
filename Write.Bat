@@ -8,11 +8,15 @@ if  errorlevel 1 goto :err
 echo Program Start!
 atprogram -t avrdragon  -i HVPP -d ATmega328P -l logrom.txt  program -f ProgramFlash.hex  --verify
 if  errorlevel 1 goto :err
-echo FUSE and LOCK START!
-atprogram -t avrdragon  -i HVPP -d ATmega328P -l logfuse.txt  write -fs --values FFD9FF  -lb --values c0 --verify
+echo FUSE START!
+atprogram -t avrdragon  -i HVPP -d ATmega328P -l logfuse.txt  write  -fs --values FFD1FF  --verify
 if  errorlevel 1 goto :err
+echo LOCK Start!
+atprogram -t avrdragon  -i HVPP -d ATmega328P -l logfuse.txt  write  -lb --values c0 --verify
 echo ALL PROECESS completed successfully..
+
 goto :eof
+
 
 :err
 echo Error!!!!
